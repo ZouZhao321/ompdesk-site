@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ompdesk — omp 编码代理的浏览器工作台</title>
+  <meta name="description"
+    content="ompdesk 读取 omp 命令行工具已经写好的会话，并在同一个进程里运行 omp 自己的 SDK。终端里开始的任务，可以在浏览器里继续，也可以经私有网络从手机上跟进。" />
+  <meta property="og:title" content="ompdesk — omp 的浏览器工作台" />
+  <meta property="og:description" content="代理在终端里跑，你在浏览器里看。" />
+  <meta property="og:image" content="../assets/hero.png" />
+  <meta name="theme-color" content="#07060f" />
+  <link rel="icon" href="../assets/omp-icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+
+<body>
+  <header class="wrap top">
+    <a class="brand" href="../">
+      <img src="../assets/omp-icon.svg" alt="" width="22" height="22" />
+      ompdesk
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="https://github.com/ZouZhao321/ompdesk">GitHub</a>
+      <a href="https://www.npmjs.com/package/ompdesk" class="hide-sm">npm</a>
+      <a href="https://github.com/ZouZhao321/ompdesk/blob/main/README.zh-CN.md" class="hide-sm">文档</a>
+      <span class="lang">
+        <a href="../">EN</a>
+        <a class="on" href="./" aria-current="page">中文</a>
+      </span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">omp 的浏览器工作台</p>
+      <h1>代理在终端里跑。<em>你在浏览器里看。</em></h1>
+      <p class="lede">
+        ompdesk 读取 <code>omp</code> 命令行工具已经写好的会话，在同一个进程里运行 omp 自己的 SDK。终端里开始的任务，可以在浏览器标签页里接着做，也可以经私有网络从手机上跟进长时间的运行。
+      </p>
+      <div class="actions">
+        <div class="install">
+          <span class="sigil">$</span>
+          <span>bunx ompdesk@latest</span>
+          <button class="copy" type="button" data-copy="bunx ompdesk@latest">复制</button>
+        </div>
+        <a class="ghost" href="https://github.com/ZouZhao321/ompdesk">源码在 GitHub</a>
+      </div>
+      <p class="note">然后打开 127.0.0.1:30141。服务就绪后启动器会自己打开标签页。</p>
+    </section>
+
+    <figure class="figure wrap">
+      <div class="split">
+        <div class="pane">
+          <div class="pane-head">
+            <strong>终端 · omp</strong>
+            <span class="dots"><span></span><span></span><span></span></span>
+          </div>
+          <div class="pane-body">
+            <div class="tline"><span class="p">$</span> <span class="c">omp</span></div>
+            <div class="tline"><span class="p">&gt;</span> <span class="c">把会话列表的加载逻辑抽成一个 hook</span></div>
+            <div class="tline">· 读取 components/SessionList.tsx</div>
+            <div class="tline">· 修改 hooks/useSessions.ts</div>
+            <div class="tline"><span class="p">&gt;</span> <span class="c">别弄坏 fork 树</span></div>
+            <div class="tline">· 运行测试<span class="caret"></span></div>
+          </div>
+        </div>
+
+        <div class="bridge" aria-hidden="true"><span>同一个 AgentSession</span></div>
+
+        <div class="pane">
+          <div class="pane-head">
+            <strong>浏览器 · ompdesk</strong>
+            <span class="dots"><span></span><span></span><span></span></span>
+          </div>
+          <div class="pane-body">
+            <div class="chat">
+              <div class="bubble">把会话列表的加载逻辑抽成一个 hook</div>
+              <div class="toolrow"><span class="ok">✓</span> 读取 components/SessionList.tsx</div>
+              <div class="toolrow"><span class="ok">✓</span> 修改 hooks/useSessions.ts</div>
+              <div class="bubble">别弄坏 fork 树</div>
+              <div class="toolrow"><span class="ok">·</span> 运行测试</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>同一个会话，两个客户端。浏览器读写的就是 omp 已有的那一份，不另做复制。</figcaption>
+    </figure>
+
+    <section class="wrap" id="why">
+      <div class="section-head">
+        <h2>标签页打开之后</h2>
+        <span class="idx">01 / 为什么</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <span class="k">会话</span>
+          <h3>同一份会话</h3>
+          <p>
+            终端里开始的对话可以在浏览器里继续，反过来也一样。设置、模型角色、凭据、skills、插件与 MCP 配置都来自 omp 已经在用的那个 <code>~/.omp/agent</code> 目录。
+          </p>
+        </article>
+        <article class="card">
+          <span class="k">对话</span>
+          <h3>可以离开的运行</h3>
+          <p>
+            正文、思考、工具调用与结果通过服务器发送事件实时到达。可以追加消息、引导当前运行、停止、压缩上下文，或者撤回最后一轮。后台跑完会发通知。
+          </p>
+        </article>
+        <article class="card">
+          <span class="k">边界</span>
+          <h3>只监听本机</h3>
+          <p>
+            服务只绑定 <code>127.0.0.1</code>，并提供密码锁。远程访问应当经过 Tailscale 这类私有网络，不向公网开放端口。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="features">
+      <div class="section-head">
+        <h2>工作台里有什么</h2>
+        <span class="idx">02 / 功能</span>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <h3>会话与项目</h3>
+          <p>
+            浏览 omp 有会话的每个项目，置顶与排序，按树查看 fork，重命名、归档或删除会话。归档的会话仍留在磁盘上。
+          </p>
+        </article>
+        <article class="feature">
+          <h3>模型角色</h3>
+          <p>
+            <code>default</code>、<code>smol</code>、<code>slow</code>、<code>vision</code>、<code>plan</code>、<code>commit</code>、<code>tiny</code>、<code>memory</code>、<code>task</code>、<code>advisor</code>。为每个角色指定模型，命令行读的是同一条记录。
+          </p>
+        </article>
+        <article class="feature">
+          <h3>文件与 Git</h3>
+          <p>
+            文件树支持源码、差异、Markdown（含 Mermaid 与 KaTeX）、图片、PDF 与 DOCX。Git 面板列出相对 <code>HEAD</code> 的改动，并能打开单个文件的差异。
+          </p>
+        </article>
+        <article class="feature">
+          <h3>子代理与会话地图</h3>
+          <p>
+            查看正在运行与已结束的子代理及其实时记录，打开会话地图按轮次浏览，并从任意一轮分出分支。
+          </p>
+        </article>
+        <article class="feature">
+          <h3>对话控制</h3>
+          <p>
+            斜杠命令、<code>@</code> 引用文件、拖入图片、计划批准、带 token 预算的目标模式、提示历史，以及随时切换推理等级。
+          </p>
+        </article>
+        <article class="feature">
+          <h3>手机上</h3>
+          <p>
+            可以按 PWA 装到手机。布局与可点区域适配小屏，长时间运行的任务能经 tailnet 在手机上看完。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="install">
+      <div class="section-head">
+        <h2>运行</h2>
+        <span class="idx">03 / 安装</span>
+      </div>
+      <div class="install-block">
+        <div class="cmd">
+          <h3>已发布的最新版本</h3>
+          <pre><span class="p">$</span> bunx ompdesk@latest</pre>
+          <p>打开 http://127.0.0.1:30141。需要 Bun 1.3.14 或更高版本。</p>
+        </div>
+        <div class="cmd">
+          <h3>全局安装</h3>
+          <pre><span class="p">$</span> bun add -g ompdesk
+            <span class="p">$</span> ompdesk
+          </pre>
+          <p>启动器会找到 Bun 运行时并在那里启动服务。用 npm 安装也可以。</p>
+        </div>
+        <div class="cmd">
+          <h3>Docker</h3>
+          <pre><span class="p">$</span> OMPDESK_PASSWORD='…' docker compose up --build</pre>
+          <p>端口只发布在回环地址；omp 主目录会挂载进来，终端里的会话照常可见。</p>
+        </div>
+        <div class="cmd">
+          <h3>远程访问，不开放端口</h3>
+          <pre><span class="p">$</span> tailscale serve --bg --tcp=30141 tcp://localhost:30141</pre>
+          <p>然后在手机上打开 tailnet 地址，用户名填 <code>omp</code>。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap safety" id="safety">
+      <div>
+        <h2>端口就是信任边界</h2>
+        <p>
+          能连上这个端口的东西，就能读文件、执行命令、消耗模型额度。除非容器显式设置放行，ompdesk 拒绝非回环的监听地址。
+        </p>
+        <p>
+          每个页面与接口都可以开启 Basic Auth。密码以 scrypt 摘要保存，文件权限 <code>0600</code>，明文不会写进磁盘。
+        </p>
+      </div>
+      <ul>
+        <li><span>01</span> 只监听 127.0.0.1，局域网与公网地址会被拒绝。</li>
+        <li><span>02</span> 密码锁，摘要存放在 ~/.omp/agent/ompdesk-auth.json。</li>
+        <li><span>03</span> 远程走 tailnet；离开本机的流量前面要加 TLS。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>MIT 许可证 · 基于 omp SDK 构建 · Fork 自 @agegr 的 pi-web</span>
+    <nav aria-label="页脚">
+      <a href="https://github.com/ZouZhao321/ompdesk">GitHub</a>
+      <a href="https://www.npmjs.com/package/ompdesk">npm</a>
+      <a href="https://github.com/ZouZhao321/ompdesk/blob/main/README.zh-CN.md">说明</a>
+      <a href="https://github.com/can1357/oh-my-pi">omp</a>
+    </nav>
+  </footer>
+
+  <script src="../assets/app.js" defer></script>
+</body>
+
+</html>

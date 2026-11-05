@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ompdesk — browser workspace for the omp coding agent</title>
+  <meta name="description"
+    content="ompdesk reads the sessions the omp CLI already writes and runs omp's own SDK in the same process. Start a run at the terminal, follow it from a browser tab, or from your phone over a private network." />
+  <meta property="og:title" content="ompdesk — browser workspace for omp" />
+  <meta property="og:description" content="The agent runs in the terminal. You watch from a browser." />
+  <meta property="og:image" content="assets/hero.png" />
+  <meta name="theme-color" content="#07060f" />
+  <link rel="icon" href="assets/omp-icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+
+<body>
+  <header class="wrap top">
+    <a class="brand" href="./">
+      <img src="assets/omp-icon.svg" alt="" width="22" height="22" />
+      ompdesk
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="https://github.com/ZouZhao321/ompdesk">GitHub</a>
+      <a href="https://www.npmjs.com/package/ompdesk" class="hide-sm">npm</a>
+      <a href="https://github.com/ZouZhao321/ompdesk#readme" class="hide-sm">Docs</a>
+      <span class="lang">
+        <a class="on" href="./" aria-current="page">EN</a>
+        <a href="./zh/">中文</a>
+      </span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Browser workspace for omp</p>
+      <h1>The agent runs in the terminal. <em>You watch from a browser.</em></h1>
+      <p class="lede">
+        ompdesk reads the sessions the <code>omp</code> CLI already writes and runs omp's own SDK in the same
+        process. Start a run at the terminal, pick it up in a tab, or follow a long job from your phone over a
+        private network.
+      </p>
+      <div class="actions">
+        <div class="install">
+          <span class="sigil">$</span>
+          <span>bunx ompdesk@latest</span>
+          <button class="copy" type="button" data-copy="bunx ompdesk@latest">Copy</button>
+        </div>
+        <a class="ghost" href="https://github.com/ZouZhao321/ompdesk">Source on GitHub</a>
+      </div>
+      <p class="note">Then open 127.0.0.1:30141. The launcher opens the tab once the server is ready.</p>
+    </section>
+
+    <figure class="figure wrap">
+      <div class="split">
+        <div class="pane">
+          <div class="pane-head">
+            <strong>terminal · omp</strong>
+            <span class="dots"><span></span><span></span><span></span></span>
+          </div>
+          <div class="pane-body">
+            <div class="tline"><span class="p">$</span> <span class="c">omp</span></div>
+            <div class="tline"><span class="p">&gt;</span> <span class="c">refactor the session loader into a
+                hook</span></div>
+            <div class="tline">· read components/SessionList.tsx</div>
+            <div class="tline">· edit hooks/useSessions.ts</div>
+            <div class="tline"><span class="p">&gt;</span> <span class="c">keep the fork tree working</span></div>
+            <div class="tline">· run tests<span class="caret"></span></div>
+          </div>
+        </div>
+
+        <div class="bridge" aria-hidden="true"><span>one AgentSession</span></div>
+
+        <div class="pane">
+          <div class="pane-head">
+            <strong>browser · ompdesk</strong>
+            <span class="dots"><span></span><span></span><span></span></span>
+          </div>
+          <div class="pane-body">
+            <div class="chat">
+              <div class="bubble">refactor the session loader into a hook</div>
+              <div class="toolrow"><span class="ok">✓</span> read components/SessionList.tsx</div>
+              <div class="toolrow"><span class="ok">✓</span> edit hooks/useSessions.ts</div>
+              <div class="bubble">keep the fork tree working</div>
+              <div class="toolrow"><span class="ok">·</span> run tests</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>
+        The same session in two clients. The browser reads and drives the one omp already has; nothing is copied.
+      </figcaption>
+    </figure>
+
+    <section class="wrap" id="why">
+      <div class="section-head">
+        <h2>What changes when the tab is open</h2>
+        <span class="idx">01 / why</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <span class="k">Sessions</span>
+          <h3>The same session</h3>
+          <p>
+            A conversation started at the terminal continues in the browser, and the reverse. Settings, model
+            roles, credentials, skills, plugins and MCP configuration come from the same
+            <code>~/.omp/agent</code> directory omp already uses.
+          </p>
+        </article>
+        <article class="card">
+          <span class="k">Chat</span>
+          <h3>A run you can leave</h3>
+          <p>
+            Text, thinking, tool calls and results stream over server-sent events. Queue a follow-up, steer the
+            run, stop it, compact the context or rewind the last turn. Background runs notify you when they
+            finish.
+          </p>
+        </article>
+        <article class="card">
+          <span class="k">Boundary</span>
+          <h3>Loopback by default</h3>
+          <p>
+            The server binds <code>127.0.0.1</code> and ships a password lock. Remote access is meant to go
+            through a private network such as Tailscale, not an open port.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="features">
+      <div class="section-head">
+        <h2>What is in the workspace</h2>
+        <span class="idx">02 / features</span>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <h3>Sessions and projects</h3>
+          <p>
+            Browse every project omp has a session for, pin and sort them, follow forks as a tree, and rename,
+            archive or delete sessions. Archived sessions stay on disk.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Model roles</h3>
+          <p>
+            <code>default</code>, <code>smol</code>, <code>slow</code>, <code>vision</code>,
+            <code>plan</code>, <code>commit</code>, <code>tiny</code>, <code>memory</code>,
+            <code>task</code> and <code>advisor</code>. Assign a model to each role; the CLI reads the same
+            record.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Files and Git</h3>
+          <p>
+            An explorer with diffs, Markdown including Mermaid and KaTeX, images, PDF and DOCX. Git lists working
+            tree changes against <code>HEAD</code> and opens a per-file diff.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Subagents and map</h3>
+          <p>
+            Watch running and finished subagents with their live transcript, then open the conversation map for a
+            per-turn view and fork from any turn.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Chat controls</h3>
+          <p>
+            Slash commands, <code>@</code> file mentions, image drops, plan approvals, goal mode with a token
+            budget, prompt history and a reasoning level per session.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>On a phone</h3>
+          <p>
+            Install the interface as a PWA. The layout and hit targets adapt to small screens, so a long run is
+            readable from a phone over a tailnet.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="install">
+      <div class="section-head">
+        <h2>Run it</h2>
+        <span class="idx">03 / install</span>
+      </div>
+      <div class="install-block">
+        <div class="cmd">
+          <h3>Latest published version</h3>
+          <pre><span class="p">$</span> bunx ompdesk@latest</pre>
+          <p>Opens http://127.0.0.1:30141. Requires Bun 1.3.14 or newer.</p>
+        </div>
+        <div class="cmd">
+          <h3>Global install</h3>
+          <pre><span class="p">$</span> bun add -g ompdesk
+            <span class="p">$</span> ompdesk
+          </pre>
+          <p>The launcher locates a Bun runtime and runs the server there. npm works too.</p>
+        </div>
+        <div class="cmd">
+          <h3>Docker</h3>
+          <pre><span class="p">$</span> OMPDESK_PASSWORD='…' docker compose up --build</pre>
+          <p>The port is published on loopback only; the omp home is mounted so terminal sessions stay visible.</p>
+        </div>
+        <div class="cmd">
+          <h3>Remote, without opening a port</h3>
+          <pre><span class="p">$</span> tailscale serve --bg --tcp=30141 tcp://localhost:30141</pre>
+          <p>Then open the tailnet address from the phone and sign in as <code>omp</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap safety" id="safety">
+      <div>
+        <h2>The port is the trust boundary</h2>
+        <p>
+          Whatever can connect to the port can read files, run commands and spend model credits. ompdesk refuses
+          a non-loopback listen address unless a container sets the override.
+        </p>
+        <p>
+          Basic Auth is available for every page and API route. The password is stored as a scrypt digest with
+          mode <code>0600</code>; the plaintext is never written.
+        </p>
+      </div>
+      <ul>
+        <li><span>01</span> Listens on 127.0.0.1; LAN and public addresses are refused.</li>
+        <li><span>02</span> Password lock, scrypt digest at ~/.omp/agent/ompdesk-auth.json.</li>
+        <li><span>03</span> Remote access through a tailnet, with TLS in front of anything that leaves the host.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>MIT licensed · Built on the omp SDK · Fork of pi-web by @agegr</span>
+    <nav aria-label="Footer">
+      <a href="https://github.com/ZouZhao321/ompdesk">GitHub</a>
+      <a href="https://www.npmjs.com/package/ompdesk">npm</a>
+      <a href="https://github.com/ZouZhao321/ompdesk#readme">README</a>
+      <a href="https://github.com/can1357/oh-my-pi">omp</a>
+    </nav>
+  </footer>
+
+  <script src="assets/app.js" defer></script>
+</body>
+
+</html>
